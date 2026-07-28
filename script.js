@@ -1,130 +1,75 @@
 document.documentElement.classList.add("js-enabled");
 
-const navigationToggle = document.querySelector(".nav-toggle");
+const navToggle = document.querySelector("#nav-toggle");
 const primaryNavigation = document.querySelector("#primary-navigation");
-const currentYear = document.querySelector("#current-year");
+const gamesMenuButton = document.querySelector("#games-menu-button");
 const languageButton = document.querySelector("#language-button");
 const languageMenu = document.querySelector("#language-menu");
+const startJourneyButton = document.querySelector("#start-journey");
+const introPanel = document.querySelector("#intro-panel");
 
-const locales = {
-  en: {
-    skip: "Skip to content",
-    "nav.about": "About",
-    "nav.experience": "Experience",
-    "nav.games": "Games",
-    "nav.contact": "Contact",
-    "hero.eyebrow": "Security Engineer · Builder · Explorer",
-    "hero.title": "Engineering trust for connected worlds.",
-    "hero.copy":
-      "I design secure software systems and development workflows across mobile, platform, and product environments.",
-    "hero.cta": "Enter the RPG",
-    "about.kicker": "About",
-    "about.title": "Security thinking, built into the system.",
-    "about.copy":
-      "My work connects security architecture, software engineering, and practical delivery. I enjoy turning complex security requirements into reliable tools and clear experiences.",
-    "experience.kicker": "Experience",
-    "experience.title": "From research to resilient platforms.",
-    "experience.samsung.meta": "Samsung Electronics · Security Engineer",
-    "experience.samsung.title": "Mobile & platform security",
-    "experience.samsung.copy":
-      "Building secure software components, communication layers, and development workflows for connected devices.",
-    "experience.grayhash.meta": "Grayhash · Security Research Engineer",
-    "experience.grayhash.title": "Assessment & vulnerability research",
-    "experience.grayhash.copy":
-      "Helping teams understand risk and improve their defenses across devices, applications, and online services.",
-    "games.kicker": "Games",
-    "games.title": "A fantasy portfolio after dark.",
-    "games.copy":
-      "Guide the wizard with WASD, arrow keys, click, or touch. Explore the moonlit realm, approach its characters and relics, then press E or tap the prompt to discover the portfolio.",
-    "games.status": "RPG world · preparing",
-    "contact.kicker": "Contact",
-    "contact.title": "Curious about the details?",
-    "contact.copy": "Reach out for an interview or a detailed CV.",
-    "language.change": "Change language",
-  },
+const closeNavigation = () => {
+  if (!navToggle || !primaryNavigation) return;
+  navToggle.setAttribute("aria-expanded", "false");
+  primaryNavigation.dataset.open = "false";
 };
 
-const applyLocale = (locale) => {
-  const dictionary = locales[locale] ?? locales.en;
-  document.documentElement.lang = locale in locales ? locale : "en";
-  document.querySelectorAll("[data-i18n]").forEach((element) => {
-    const value = dictionary[element.dataset.i18n];
-    if (value) {
-      element.textContent = value;
-    }
-  });
+navToggle?.addEventListener("click", () => {
+  const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+  navToggle.setAttribute("aria-expanded", String(!isOpen));
+  if (primaryNavigation) primaryNavigation.dataset.open = String(!isOpen);
+});
 
-  try {
-    localStorage.setItem("portfolio-locale", document.documentElement.lang);
-  } catch {
-    // The selected language still applies when storage is unavailable.
-  }
+primaryNavigation?.addEventListener("click", closeNavigation);
+
+gamesMenuButton?.addEventListener("click", () => {
+  closeNavigation();
+  introPanel?.setAttribute("hidden", "");
+  document.querySelector("#game-world canvas")?.focus({ preventScroll: true });
+  window.dispatchEvent(new CustomEvent("rpg:resume"));
+});
+
+document.querySelectorAll(".quest-nav").forEach((button) => {
+  button.addEventListener("click", () => {
+    closeNavigation();
+    window.dispatchEvent(
+      new CustomEvent("rpg:chapter-request", {
+        detail: { index: Number(button.dataset.chapter) },
+      }),
+    );
+  });
+});
+
+startJourneyButton?.addEventListener("click", () => {
+  introPanel?.setAttribute("hidden", "");
+  window.dispatchEvent(new CustomEvent("rpg:start"));
+});
+
+const setLanguageMenu = (open) => {
+  if (!languageButton || !languageMenu) return;
+  languageButton.setAttribute("aria-expanded", String(open));
+  languageMenu.hidden = !open;
 };
 
-if (currentYear) {
-  currentYear.textContent = new Date().getFullYear().toString();
-}
+languageButton?.addEventListener("click", () => {
+  setLanguageMenu(languageButton.getAttribute("aria-expanded") !== "true");
+});
 
-if (navigationToggle && primaryNavigation) {
-  navigationToggle.addEventListener("click", () => {
-    const isOpen = navigationToggle.getAttribute("aria-expanded") === "true";
-    navigationToggle.setAttribute("aria-expanded", String(!isOpen));
-    primaryNavigation.dataset.open = String(!isOpen);
-  });
+languageMenu?.addEventListener("click", (event) => {
+  const option = event.target.closest("[data-locale]");
+  if (!option) return;
+  document.documentElement.lang = option.dataset.locale || "en";
+  setLanguageMenu(false);
+  languageButton?.focus();
+});
 
-  primaryNavigation.addEventListener("click", (event) => {
-    if (event.target instanceof HTMLAnchorElement) {
-      navigationToggle.setAttribute("aria-expanded", "false");
-      primaryNavigation.dataset.open = "false";
-    }
-  });
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".language-switcher")) setLanguageMenu(false);
+  if (!event.target.closest(".game-hud")) closeNavigation();
+});
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && navigationToggle.getAttribute("aria-expanded") === "true") {
-      navigationToggle.setAttribute("aria-expanded", "false");
-      primaryNavigation.dataset.open = "false";
-      navigationToggle.focus();
-    }
-  });
-}
-
-if (languageButton && languageMenu) {
-  const setLanguageMenu = (isOpen) => {
-    languageButton.setAttribute("aria-expanded", String(isOpen));
-    languageMenu.hidden = !isOpen;
-  };
-
-  languageButton.addEventListener("click", () => {
-    setLanguageMenu(languageButton.getAttribute("aria-expanded") !== "true");
-  });
-
-  languageMenu.addEventListener("click", (event) => {
-    const option = event.target.closest("[data-locale]");
-    if (option) {
-      applyLocale(option.dataset.locale);
-      setLanguageMenu(false);
-      languageButton.focus();
-    }
-  });
-
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest(".language-switcher")) {
-      setLanguageMenu(false);
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      setLanguageMenu(false);
-      languageButton.focus();
-    }
-  });
-}
-
-let savedLocale = "en";
-try {
-  savedLocale = localStorage.getItem("portfolio-locale") || "en";
-} catch {
-  // Use English when storage is unavailable.
-}
-applyLocale(savedLocale);
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  closeNavigation();
+  setLanguageMenu(false);
+});
