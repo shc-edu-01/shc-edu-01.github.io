@@ -17,7 +17,7 @@ const locales = {
     "hero.title": "Engineering trust for connected worlds.",
     "hero.copy":
       "I design secure software systems and development workflows across mobile, platform, and product environments.",
-    "hero.cta": "Enter the RPG preview",
+    "hero.cta": "Enter the RPG",
     "about.kicker": "About",
     "about.title": "Security thinking, built into the system.",
     "about.copy":
@@ -35,7 +35,7 @@ const locales = {
     "games.kicker": "Games",
     "games.title": "A fantasy portfolio after dark.",
     "games.copy":
-      "A wizard-led RPG journey is being prepared here. The full 3D world, exploration, and character interactions will arrive in later loops.",
+      "Guide the wizard with WASD, arrow keys, click, or touch. Explore the moonlit realm, approach its characters and relics, then press E or tap the prompt to discover the portfolio.",
     "games.status": "RPG world · preparing",
     "contact.kicker": "Contact",
     "contact.title": "Curious about the details?",
