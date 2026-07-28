@@ -32,6 +32,14 @@
           <span class="fallback-orb" aria-hidden="true">✦</span>
           <p>Opening the moonlit realm…</p>
         </div>
+        <div id="combat-text-layer" class="combat-text-layer" aria-hidden="true"></div>
+        <p
+          id="combat-announcer"
+          class="sr-only"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
 
         <header class="game-hud">
           <button class="brand quest-nav" type="button" data-chapter="0" aria-label="Open Home chapter">
@@ -86,9 +94,30 @@
           </button>
         </aside>
 
+        <aside id="combat-hud" class="combat-hud" aria-label="Combat status" hidden>
+          <div>
+            <span class="combat-hud-kicker">Arcane encounter</span>
+            <strong id="combat-state-label">Exploring</strong>
+          </div>
+          <div
+            id="shield-meter"
+            class="shield-meter"
+            role="meter"
+            aria-label="Arcane shield"
+            aria-valuemin="0"
+            aria-valuemax="3"
+            aria-valuenow="3"
+          >
+            <span data-shield="1"></span>
+            <span data-shield="2"></span>
+            <span data-shield="3"></span>
+          </div>
+        </aside>
+
         <div class="control-hint" aria-hidden="true">
           <span><kbd>WASD</kbd> move</span>
           <span><kbd>E</kbd> interact</span>
+          <span><kbd>Space</kbd> cast</span>
           <span>Click / tap to travel</span>
         </div>
 
@@ -99,10 +128,22 @@
             <button type="button" data-move="down" aria-label="Move down">▼</button>
             <button type="button" data-move="right" aria-label="Move right">▶</button>
           </div>
-          <button id="mobile-interact" class="interact-orb" type="button" disabled>
-            <span>E</span>
-            Interact
-          </button>
+          <div class="mobile-action-buttons">
+            <button
+              id="mobile-attack"
+              class="interact-orb attack-orb"
+              type="button"
+              aria-label="Cast at the nearest Risk Shadow"
+              disabled
+            >
+              <span>✦</span>
+              Attack
+            </button>
+            <button id="mobile-interact" class="interact-orb" type="button" disabled>
+              <span>E</span>
+              Interact
+            </button>
+          </div>
         </div>
 
         <button id="interaction-prompt" class="interaction-prompt" type="button" hidden>

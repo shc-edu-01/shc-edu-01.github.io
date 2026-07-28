@@ -56,6 +56,18 @@ a:focus-visible {
   display: none !important;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .skip-link {
   position: fixed;
   top: 0.75rem;
@@ -126,6 +138,34 @@ a:focus-visible {
 
 .game-world[data-state="ready"] .game-fallback {
   display: none;
+}
+
+.combat-text-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.achievement-hit-text {
+  position: absolute;
+  max-width: min(14rem, 70vw);
+  color: var(--gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.9rem, 2vw, 1.25rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-shadow:
+    0 0 0.8rem rgba(255, 215, 130, 0.85),
+    0 0.15rem 0.2rem rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  transition:
+    translate 180ms ease-out,
+    opacity 180ms linear;
+  will-change: left, top, opacity, translate;
 }
 
 .game-hud {
@@ -298,6 +338,61 @@ a:focus-visible {
 .hud-action:disabled {
   opacity: 0.5;
   cursor: wait;
+}
+
+.combat-hud {
+  position: absolute;
+  top: 5.5rem;
+  right: var(--safe-right);
+  z-index: 7;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 12rem;
+  border: 1px solid rgba(255, 140, 167, 0.3);
+  border-radius: 1rem;
+  padding: 0.75rem 0.85rem;
+  background: rgba(17, 11, 35, 0.88);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+}
+
+.combat-hud-kicker,
+.combat-hud strong {
+  display: block;
+}
+
+.combat-hud-kicker {
+  color: #d3bfff;
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.combat-hud strong {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+}
+
+.shield-meter {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.shield-meter span {
+  width: 0.72rem;
+  height: 1.05rem;
+  border: 1px solid rgba(216, 198, 255, 0.4);
+  border-radius: 999px 999px 0.35rem 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  transform: rotate(18deg);
+}
+
+.shield-meter span[data-active="true"] {
+  background: linear-gradient(180deg, var(--starlight), var(--violet));
+  box-shadow: 0 0 0.8rem rgba(167, 128, 255, 0.65);
 }
 
 .control-hint {
@@ -596,6 +691,13 @@ kbd {
     display: none;
   }
 
+  .combat-hud {
+    top: 14.2rem;
+    right: var(--safe-right);
+    min-width: 10.8rem;
+    padding: 0.6rem 0.75rem;
+  }
+
   .mobile-controls {
     position: absolute;
     right: var(--safe-right);
@@ -612,6 +714,12 @@ kbd {
     pointer-events: auto;
     touch-action: none;
     user-select: none;
+  }
+
+  .mobile-action-buttons {
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-end;
   }
 
   .d-pad {
@@ -657,17 +765,27 @@ kbd {
     width: 3rem;
   }
 
+  .attack-orb > span {
+    background: linear-gradient(135deg, var(--starlight), var(--violet));
+    color: var(--night);
+    box-shadow: 0 0 1.3rem rgba(167, 128, 255, 0.5);
+  }
+
+  .interact-orb:disabled {
+    opacity: 0.45;
+  }
+
   .game-status {
     display: none;
   }
 
   .language-switcher {
-    right: calc(var(--safe-right) + 4rem);
-    bottom: calc(var(--safe-bottom) + 0.6rem);
+    right: var(--safe-right);
+    bottom: calc(var(--safe-bottom) + 6.9rem);
   }
 
   .interaction-prompt {
-    bottom: 7.2rem;
+    bottom: 8rem;
   }
 }
 
@@ -683,6 +801,10 @@ kbd {
 
   .quest-panel h1 {
     font-size: 1.2rem;
+  }
+
+  .combat-hud {
+    top: 13.9rem;
   }
 
   .intro-panel h1 {
@@ -707,5 +829,9 @@ kbd {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .achievement-hit-text {
+    transition: opacity 0.01ms linear;
   }
 }
