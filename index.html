@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="SeungHyeon Cho — security engineer and builder of secure digital systems."
+    >
+    <title>SeungHyeon Cho | Security Engineer</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./script.js" defer></script>
+    <script src="./game.js" type="module"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content" data-i18n="skip">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="SeungHyeon Cho, home">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>SHC</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <span aria-hidden="true">Menu</span>
+      </button>
+
+      <nav id="primary-navigation" class="primary-nav" aria-label="Primary navigation">
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#experience" data-i18n="nav.experience">Experience</a>
+        <a href="#games" data-i18n="nav.games">Games</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section id="home" class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Security Engineer · Builder · Explorer</p>
+        <h1 id="hero-title" data-i18n="hero.title">Engineering trust for connected worlds.</h1>
+        <p class="hero-copy" data-i18n="hero.copy">
+          I design secure software systems and development workflows across
+          mobile, platform, and product environments.
+        </p>
+        <a class="button" href="#games" data-i18n="hero.cta">Enter the RPG preview</a>
+      </section>
+
+      <section id="about" class="content-section" aria-labelledby="about-title">
+        <p class="section-kicker" data-i18n="about.kicker">About</p>
+        <h2 id="about-title" data-i18n="about.title">Security thinking, built into the system.</h2>
+        <p data-i18n="about.copy">
+          My work connects security architecture, software engineering, and
+          practical delivery. I enjoy turning complex security requirements
+          into reliable tools and clear experiences.
+        </p>
+      </section>
+
+      <section id="experience" class="content-section" aria-labelledby="experience-title">
+        <p class="section-kicker" data-i18n="experience.kicker">Experience</p>
+        <h2 id="experience-title" data-i18n="experience.title">From research to resilient platforms.</h2>
+        <div class="card-grid">
+          <article class="card">
+            <p class="card-meta" data-i18n="experience.samsung.meta">Samsung Electronics · Security Engineer</p>
+            <h3 data-i18n="experience.samsung.title">Mobile &amp; platform security</h3>
+            <p data-i18n="experience.samsung.copy">
+              Building secure software components, communication layers, and
+              development workflows for connected devices.
+            </p>
+          </article>
+          <article class="card">
+            <p class="card-meta" data-i18n="experience.grayhash.meta">Grayhash · Security Research Engineer</p>
+            <h3 data-i18n="experience.grayhash.title">Assessment &amp; vulnerability research</h3>
+            <p data-i18n="experience.grayhash.copy">
+              Helping teams understand risk and improve their defenses across
+              devices, applications, and online services.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="games" class="games-section" aria-labelledby="games-title">
+        <div>
+          <p class="section-kicker" data-i18n="games.kicker">Games</p>
+          <h2 id="games-title" data-i18n="games.title">A fantasy portfolio after dark.</h2>
+          <p data-i18n="games.copy">
+            A wizard-led RPG journey is being prepared here. The full 3D world,
+            exploration, and character interactions will arrive in later loops.
+          </p>
+        </div>
+        <div
+          id="game-world"
+          class="game-placeholder"
+          role="group"
+          aria-label="Moonlit fantasy RPG preview"
+          data-state="loading"
+        >
+          <div id="game-fallback" class="game-fallback">
+            <span class="fallback-orb" aria-hidden="true">✦</span>
+            <p>Loading the moonlit realm. Portfolio content remains available below.</p>
+          </div>
+          <button id="interaction-prompt" class="interaction-prompt" type="button" hidden>
+            <span aria-hidden="true">E</span>
+            <span id="interaction-prompt-text">Interact</span>
+          </button>
+          <section
+            id="interaction-panel"
+            class="interaction-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="interaction-title"
+            hidden
+          >
+            <button id="interaction-close" class="interaction-close" type="button" aria-label="Close">
+              ×
+            </button>
+            <p id="interaction-category" class="card-meta">Discovery</p>
+            <h3 id="interaction-title">A moonlit discovery</h3>
+            <p id="interaction-body"></p>
+            <a id="interaction-link" class="text-link interaction-link" href="mailto:me@shc.me">
+              Request a detailed CV
+            </a>
+          </section>
+          <span
+            id="game-status"
+            class="game-status"
+            data-i18n="games.status"
+            role="status"
+            aria-live="polite"
+          >RPG world · preparing</span>
+        </div>
+      </section>
+
+      <section id="contact" class="content-section contact" aria-labelledby="contact-title">
+        <p class="section-kicker" data-i18n="contact.kicker">Contact</p>
+        <h2 id="contact-title" data-i18n="contact.title">Curious about the details?</h2>
+        <p data-i18n="contact.copy">Reach out for an interview or a detailed CV.</p>
+        <a class="text-link" href="mailto:me@shc.me">me@shc.me</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="current-year">2026</span> SeungHyeon Cho</p>
+    </footer>
+
+    <div class="language-switcher">
+      <button
+        id="language-button"
+        class="language-button"
+        type="button"
+        aria-label="Change language"
+        aria-expanded="false"
+        aria-controls="language-menu"
+      >
+        <span aria-hidden="true">🌐</span>
+        <span class="sr-only" data-i18n="language.change">Change language</span>
+      </button>
+      <div id="language-menu" class="language-menu" role="menu" hidden>
+        <button type="button" role="menuitemradio" aria-checked="true" data-locale="en">
+          English
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
